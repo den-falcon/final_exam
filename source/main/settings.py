@@ -122,8 +122,8 @@ USE_I18N = True
 
 USE_TZ = True
 
-LOGOUT_REDIRECT_URL = "index"
-LOGIN_REDIRECT_URL = "index"
+LOGOUT_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = 'accounts:registration'
 
 LOGIN_URL = 'accounts:login'
 
@@ -138,7 +138,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.AuthUser'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

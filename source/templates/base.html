@@ -1,0 +1,188 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Ad Board</title>
+    <!-- Fonts -->
+    <link rel="stylesheet" href="{% static 'icons/font-awesome/css/font-awesome.min.css' %}">
+    <!-- Custom Stylesheet -->
+    {% block style %}{% endblock style %}
+    <link rel="stylesheet" href="{% static 'plugins/metismenu/css/metisMenu.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/toastr/css/toastr.min.css' %}">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+<!--******************* Анимация загрузки ********************-->
+<div id="preloader">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"></circle>
+        </svg>
+    </div>
+</div>
+<!--********************************** Главная страница ***********************************-->
+<div id="main-wrapper" class="show">
+    <!--********************************** Логотип ***********************************-->
+    <div class="nav-header">
+        <div class="brand-logo">
+            <a href="{% url 'index' %}">
+                <span class="brand-title">
+                    <img src="{% static 'img/logo.png' %}" alt="">
+                </span>
+            </a>
+        </div>
+    </div>
+    <!--********************************** Header ***********************************-->
+    <div class="header">
+        <div class="header-content clearfix">
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="toggle-icon"><i class="icon-menu"></i></span>
+                </div>
+            </div>
+            <div class="header-left">
+                <div class="input-group icons">
+                    <div class="text-left ml-4">
+                        <a class="mx-1 btn btn-secondary btn-md" href="{% url 'crmapp:order_create' %}">Создать
+                            заказ</a>
+                        <a class="mx-1 btn btn-secondary btn-md" href="{% url 'crmapp:order_index' %}">Список
+                            заказов</a>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <ul class="clearfix">
+                    <li class="icons dropdown d-none d-md-flex">
+                        <a href="javascript:void(0)" class="log-user" data-toggle="dropdown" aria-expanded="false">
+                            <span>Аккаунт</span> <i class="icon-user f-s-20" aria-hidden="true"></i>
+                        </a>
+                        <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
+                            <div class="dropdown-content-body">
+                                <ul>
+                                    <li>
+                                        <a class="btn mb-1 btn-rounded btn-info"
+                                           href="{% url 'accounts:profile' user.id %}">
+                                            <i class="icon-user"></i>
+                                            <span>Мой профиль</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="my-2">
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'accounts:logout' %}">
+                                            <i class="icon-key"></i>
+                                            <span>Выйти</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--********************************** Sidebar ***********************************-->
+    <div class="nk-sidebar">
+        <div class="slimScrollDiv">
+            <div class="nk-nav-scroll active">
+                <ul class="metismenu in" id="menu">
+                    {% block links %}
+                            <li>
+                                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                    <i class="icon-people menu-icon"></i>
+                                    <span class="nav-text">Сотрудники</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="{% url 'accounts:staff-list' %}">Список сотрудников</a></li>
+                                        <li><a href="{% url 'accounts:staff-manager-list' %}">Список менеджеров</a></li>
+                                    <li><a href="{% url 'accounts:register' %}">Добавить сотрудника</a></li>
+                                    <li><a href="{% url 'accounts:black-list' %}">Черный список</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                    <i class="icon-notebook menu-icon"></i>
+                                    <span class="nav-text">Справочники</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="{% url 'crmapp:service_list' %}" aria-expanded="false">Услуги</a></li>
+                                    <li><a href="{% url 'crmapp:inventory_index' %}" aria-expanded="false">Инвентарь</a>
+                                    </li>
+                                    <li><a href="{% url 'crmapp:object_type_list' %}" aria-expanded="false">Объкеты</a>
+                                    </li>
+                                    <li><a href="{% url 'crmapp:fine_list' %}" aria-expanded="false">Штрафы</a></li>
+                                    <li><a href="{% url 'crmapp:bonus_list' %}" aria-expanded="false">Бонусы</a></li>
+                                    <li><a href="{% url 'crmapp:client_index' %}" aria-expanded="false">Клиенты</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                    <i class="icon-docs menu-icon"></i>
+                                    <span class="nav-text">Отчеты</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="{% url 'crmapp:manager_cash_list' %}">Отчет по кассе</a></li>
+                                    <li><a href="{% url 'crmapp:income_outcome_report' %}">Отчет о расходах и
+                                        доходах</a>
+                                    </li>
+                                    <li><a href="{% url 'crmapp:manager_report_list' %}">Отчет менеджера</a></li>
+                                    <li><a href="{% url 'accounts:payout_list' %}">Отчет по выплатам</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{% url 'crmapp:order_deleted_list' %}" aria-expanded="false">
+                                    <i class="icon-trash menu-icon"></i><span class="nav-text">Удаленные заказы</span>
+                                </a>
+                            </li>
+                            <li class="hidden">
+                                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                </a>
+                            </li>
+                            <li class="hidden">
+                                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                </a>
+                            </li>
+                    {% endblock links %}
+                </ul>
+            </div>
+            <div class="slimScrollBar"></div>
+            <div class="slimScrollRail"></div>
+        </div>
+    </div>
+    <!--********************************** Контент ***********************************-->
+    <div class="content-body">
+        <div class="container-fluid">
+            {% block content %}{% endblock content %}
+        </div>
+    </div>
+    <!--********************************** Футер ***********************************-->
+    <div class="footer">
+        <div class="copyright">
+            <p>Copyright © Designed &amp; 2022</p>
+        </div>
+    </div>
+</div>
+<!--********************************** Modal ***********************************-->
+
+<!--********************************** Скрипты ***********************************-->
+<script src="{% static 'plugins/common/common.min.js' %}"></script>
+<script src="{% static 'js/custom.min.js' %}"></script>
+<script src="{% static 'js/settings.js' %}"></script>
+<script src="{% static 'js/gleek.js' %}"></script>
+<script src="{% static 'js/styleSwitcher.js' %}"></script>
+<script src="{% static 'plugins/metismenu/js/metisMenu.min.js' %}"></script>
+<script src="{% static 'plugins/toastr/js/toastr.min.js' %}"></script>
+<script src="{% static 'plugins/toastr/js/toastr.init.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+{#{% include 'partial/messages.html' %}#}
+
+{% block scripts %}{% endblock scripts %}
+</body>
+</html>

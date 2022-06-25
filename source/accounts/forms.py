@@ -1,22 +1,33 @@
 from django import forms
+from django.contrib.auth import get_user_model
 
-from django.contrib.auth.forms import UserCreationForm, UsernameField
+from django.contrib.auth.forms import UserCreationForm, UsernameField, AuthenticationForm
 
-from accounts.models import User
+User = get_user_model()
 
 
-class MyUserCreationForm(UserCreationForm):
-    phone = PhoneNumberField(
-        error_messages={"invalid": "Формат: +996 XXX XXX XXX"})
+class AuthUserAuthenticationForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(AuthUserAuthenticationForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            if field != 'error_messages':
+                self.fields[field].widget.attrs.update(
+                    {
+                        'class': 'form-control',
+                        'placeholder': self.fields[field].label
+                    }
+                )
 
+
+class AuthUserCreationForm(UserCreationForm):
     class Meta:
-        model = Users
-        fields = ['username', 'password1', 'password2',
-                  'first_name', 'phone']
+        model = User
+        fields = ('username', 'password1', 'password2',
+                  'first_name', 'last_name', 'phone', 'birth_date', 'avatar',)
         field_classes = {'username': UsernameField}
 
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
-        model = Users
+        model = User
         fields = ("phone",)

@@ -3,7 +3,9 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 
-class User(AbstractUser):
+# Create your models here.
+
+class AuthUser(AbstractUser):
     username = models.CharField(
         max_length=10,
         verbose_name=_('Имя пользователя'),

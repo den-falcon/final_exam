@@ -1,12 +1,21 @@
-from django.views.generic import CreateView
-from accounts.models import User
-from accounts.forms import UserCreationForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth.views import LoginView
+from django.urls import reverse
+from django.views.generic import CreateView, DetailView
+from accounts.forms import AuthUserCreationForm, AuthUserAuthenticationForm
+
+User = get_user_model()
 
 
-class RegisterView(CreateView):
+class LoginUser(LoginView):
+    form_class = AuthUserAuthenticationForm
+    template_name = 'accounts/login.html'
+
+
+class RegistrationView(CreateView):
     model = User
-    template_name = 'registration/registration.html'
-    form_class = UserCreationForm
+    template_name = 'accounts/registration.html'
+    form_class = AuthUserCreationForm
 
     def get_success_url(self):
         next_url = self.request.GET.get('next')
@@ -18,6 +27,6 @@ class RegisterView(CreateView):
 
 
 class UserProfileView(DetailView):
-    model = Users
-    template_name = 'registration/profile.html'
+    model = User
+    template_name = 'accounts/profile.html'
     context_object_name = "user_object"
