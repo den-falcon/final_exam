@@ -2,17 +2,16 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext as _
 
-
 # Create your models here.
-from webapp.choices import AdStatusChoices
+from webapp.choices import AdvertisementStatusChoices
 
 
-class Ad(models.Model):
+class Advertisement(models.Model):
     author = models.ForeignKey(
         get_user_model(),
         null=False,
         blank=False,
-        related_name='ads',
+        related_name='advertisements',
         on_delete=models.CASCADE,
         verbose_name=_('Автор'),
     )
@@ -55,6 +54,8 @@ class Ad(models.Model):
         verbose_name=_('Дата редактирования'),
     )
     publicated_at = models.DateTimeField(
+        null=True,
+        blank=True,
         verbose_name=_('Дата публикации'),
     )
     status = models.CharField(
@@ -62,13 +63,13 @@ class Ad(models.Model):
         null=False,
         blank=False,
         default='on_moderation',
-        choices=AdStatusChoices.choices,
+        choices=AdvertisementStatusChoices.choices,
         verbose_name=_('Статус')
     )
     is_deleted = models.BooleanField(default=False, verbose_name=_('Удалено'))
 
     class Meta:
-        db_table = 'ads'
+        db_table = 'advertisements'
         verbose_name = _('Объявление')
         verbose_name_plural = _('Объявления')
 
@@ -83,7 +84,7 @@ class Category(models.Model):
         blank=False,
         verbose_name=_('Название'),
     )
-    description = models.CharField(
+    description = models.TextField(
         max_length=300,
         null=True,
         blank=True,

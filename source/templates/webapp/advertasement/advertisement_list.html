@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="row">
+        {% for advertisement in advertisements %}
+            <div class="col-md-6 col-lg-3">
+                <div class="card">
+                    {% if request.user == advertisement.author %}
+                        <div class="card-header text-right">
+                            <a class="btn btn-transparent ml-2 d-inline"
+                               href="{% url 'webapp:advertisements_update' advertisement.pk %}">
+                                <i title="Редактировать"
+                                   class="fa fa-pencil text-dark hover-blue fs-5"></i>
+                            </a>
+                            <form action="{% url "webapp:advertisements_delete" advertisement.pk %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-transparent ml-2 d-inline">
+                                    <i title="Удалить" class="fa fa-trash text-dark hover-blue fs-5"></i>
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
+                    <a href="{% url 'webapp:advertisements_detail' advertisement.pk %}">
+                        <img class="img-fluid" src="{{ advertisement.image.url }}" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ advertisement.title }}</h5>
+                            <p class="card-text">{{ advertisement.description }}</p>
+                            <p class="card-text"><strong class="text-muted">{{ advertisement.author.phone }}</strong>
+                            </p>
+                            <hr>
+                            <p class="card-text fs-4 text-dark"><strong>{{ advertisement.price }} сом</strong>
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

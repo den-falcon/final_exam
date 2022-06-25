@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{% block title_card %}Создание заказа{% endblock title_card %}</h4>
+            <hr>
+            <div class="basic-form">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% include 'partial/form.html' with button_text='Создать' label=True %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

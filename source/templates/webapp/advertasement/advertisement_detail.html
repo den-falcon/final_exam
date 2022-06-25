@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <div class="text-center mb-0">
+                <h3 class="mb-0">{{ advertisement.title }}</h3>
+            </div>
+            <hr>
+            <div class="row px-5 mb-5">
+                <div class="col-12">
+                    <strong class="mr-3">Статус: </strong>
+                    <span class="badge badge-pill badge-secondary">{{ advertisement.get_status_display }}</span>
+                </div>
+            </div>
+            <div class="row px-5">
+                <div class="col-lg-6 col-md-12">
+                    <a href="{% url 'accounts:user_profile' advertisement.author.pk %}">
+                        <p class="mb-1">
+                            <strong class="mr-3">Автор: </strong><span>{{ advertisement.author.first_name }} {{ advertisement.author.last_name }}</span>
+                        </p>
+                    </a>
+                    <p class="mb-1">
+                        <strong class="mr-3">Дата
+                            публикации: </strong><span>{{ advertisement.publicated_at }}</span></p>
+                    <p class="mb-1">
+                        <strong class="mr-3">Дата обновления:</strong>
+                        <span>{{ advertisement.updated_at }}</span>
+                    </p>
+                    <p class="mb-1">
+                        <strong class="mr-3">Телефон:</strong>
+                        <span>{{ advertisement.author.phone }}</span>
+                    </p>
+                    <p class="mb-1">
+                        <strong class="text-dark mr-3">Описание:</strong>
+                    </p>
+                    <p class="mb-1">
+                        <span>{{ advertisement.description }}</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <img class="img-fluid" src="{{ advertisement.image.url }}" alt="">
+            </div>
+        </div>
+    </div>
+{% endblock content %}
